@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'taskapp.celery.CeleryConfig',
+    'rest_framework',
+    'weather',
 ]
 
 MIDDLEWARE = [

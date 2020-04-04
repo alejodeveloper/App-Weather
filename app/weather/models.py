@@ -47,7 +47,7 @@ class CityWeatherLog(models.Model):
     city = models.ForeignKey(
         CityWeather, null=False, blank=False, on_delete=models.SET_NULL
     )
-    log = models.ForeignKey(
+    response_log = models.ForeignKey(
         LogResponse, null=False, blank=False, on_delete=models.SET_NULL
     )
     created_at = models.DateTimeField(auto_now=True)
