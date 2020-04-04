@@ -3,8 +3,12 @@ weather.models
 --------------
 Model for the weather app
 """
+from datetime import date
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+
+from app.weather.exceptions import CityDoesNotExistsException
 
 
 class CityWeather(models.Model):
@@ -23,6 +27,20 @@ class CityWeather(models.Model):
             models.Index(fields=["country_slug"])
         ]
 
+    @classmethod
+    def get_city(cls, city_slug: str):
+        """
+        Get a CityWeather object by its slug
+        :param city_slug: Slug identifier of the city
+        :return: A instance of CityWeather
+        """
+        try:
+            city = cls.objects.get(slug=city_slug)
+            return city
+        except ObjectDoesNotExist:
+            exception_message = f"The city with slug {city_slug} doesn't exists"
+            raise CityDoesNotExistsException(exception_message)
+
 
 class LogResponse(models.Model):
     """
@@ -39,6 +57,22 @@ class LogResponse(models.Model):
             models.Index(fields=["log_date", "status_response"])
         ]
 
+    @classmethod
+    def save_log_response(cls, status_code: int, response_data: dict):
+        """
+        Saves a log for a specific response to the API
+        :param status_code: Status code of the response
+        :param response_data: Response data
+        :return: The instance created for the data
+        """
+        created_log = cls.objects.create(
+            log_date=date.today(),
+            status_response=status_code,
+            response=response_data
+        )
+
+        return created_log
+
 
 class CityWeatherLog(models.Model):
     """
@@ -52,3 +86,23 @@ class CityWeatherLog(models.Model):
     )
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def create_city_weather_log(
+            cls, city_slug: str, status_code: int, response_data: dict
+    ):
+        """
+        Saves a log response for a specific city
+        :param city_slug: Slug identifier of the city
+        :param status_code: Status code of the response
+        :param response_data: Response data from the request
+        """
+        city = CityWeather.get_city(city_slug)
+        response_log = LogResponse.save_log_response(
+            status_code=status_code,
+            response_data=response_data
+        )
+        cls.objects.create(
+            city=city,
+            response_log=response_log
+        )

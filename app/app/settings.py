@@ -121,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+################################################################################
+########################### OPEN WEATHER API SETTINGS  #########################
+################################################################################
+OPEN_WEATHER_API_BASE_URL = 'http://api.openweathermap.org/data/2.5/'
+OPEN_WEATHER_API_ID_KEY = 'b6907d289e10d714a6e88b30761fae22'
