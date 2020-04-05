@@ -1,0 +1,48 @@
+version: '2'
+services:
+  # django
+  weather-app:
+    image: ubuntu
+    container_name: weather-app
+    volumes:
+      - ../../weather_app:/app/weather_app
+    ports:
+      - "8000:8000"
+    networks:
+      - weather-app-nt
+  # postgresql
+  postgresql-weather-app:
+    image: postgres
+    container_name: weather-postgresql
+    environment:
+      - POSTGRES_PASSWORD=somepwd112233
+      - POSTGRES_DB=weather-app
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../../../.data/pgsql-weather-postgresql:/var/lib/postgresql/data
+    networks:
+      - weather-app-nt
+
+    # celery beat
+  celery-weather:
+    image: celery
+    container_name: weather-celery
+    entrypoint: celery -A taskapp worker --workdir=/app/weather_app/ --loglevel=INFO --beat
+    volumes:
+     - ../../:/app/
+    environment:
+     - CELERY=True
+    networks:
+      - weather-app-nt
+
+  # redis
+  redis-weather:
+    image: redis
+    container_name: weather-redis
+    networks:
+      - weather-app-nt
+
+networks:
+  weather-app-nt:
+    external: true

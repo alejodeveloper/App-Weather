@@ -8,7 +8,7 @@ from datetime import date
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
-from app.weather.exceptions import CityDoesNotExistsException
+from .exceptions import CityDoesNotExistsException
 
 
 class CityWeather(models.Model):
@@ -79,10 +79,10 @@ class CityWeatherLog(models.Model):
     Model to associate the response to the model
     """
     city = models.ForeignKey(
-        CityWeather, null=False, blank=False, on_delete=models.SET_NULL
+        CityWeather, null=True, blank=True, on_delete=models.SET_NULL
     )
     response_log = models.ForeignKey(
-        LogResponse, null=False, blank=False, on_delete=models.SET_NULL
+        LogResponse, null=False, blank=False, on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)

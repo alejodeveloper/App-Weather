@@ -1,5 +1,5 @@
 """
-weather.open_weather_api
+services.open_weather_api
 ------------------------
 Weather API methods to retrieve weather information data from some parameters
 Read the docs
@@ -9,8 +9,9 @@ import requests
 
 from django.conf import settings
 
-from app.weather.constants import ApiConstants
-from app.weather.exceptions import APIRequestException
+from weather.constants import ApiConstants
+from weather.exceptions import APIRequestException
+from weather.models import LogResponse
 
 
 class OpenWeatherApi:
@@ -40,6 +41,10 @@ class OpenWeatherApi:
             return response.status_code, response.json()
 
         else:
+            LogResponse.save_log_response(
+                status_code=response.status_code,
+                response_data=response.json()
+            )
             exception_message = f"The API response with status code " \
                 f"{response.status_code} and data\n {response.json()}"
             raise APIRequestException(exception_message)
