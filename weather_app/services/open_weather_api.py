@@ -18,9 +18,9 @@ class OpenWeatherApi:
     """
     Class to handle request to open weather map API
     """
-    def __init__(self, city_slug: str, country_slug: str):
+    def __init__(self, city_name: str, country_slug: str):
         self.base_url = settings.OPEN_WEATHER_API_BASE_URL
-        self.city_slug = city_slug
+        self.city_name = city_name
         self.country_slug = country_slug
 
     def get_country_city_weather_data(self) -> (int, dict):
@@ -32,7 +32,7 @@ class OpenWeatherApi:
         """
         api_url = f"{self.base_url}weather"
         request_params = dict(
-            q=f"{self.city_slug},{self.country_slug}",
+            q=f"{self.city_name},{self.country_slug}",
             appid=settings.OPEN_WEATHER_API_ID_KEY
         )
         response = requests.get(api_url, params=request_params)

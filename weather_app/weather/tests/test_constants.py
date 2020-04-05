@@ -1,3 +1,4 @@
+from decimal import Decimal
 from enum import Enum
 
 
@@ -20,3 +21,22 @@ class GeneralTestConstants(Enum):
 
 class MockedRequestMethods(Enum):
     WEATHER_API_GET = "weather_app.services.open_weather_api.requests.get"
+
+
+class DegreesConstants(Enum):
+    NORTH = Decimal(str(5.11))
+    NORTH_NORTHEAST = Decimal(str(25.11))
+    NORTH_EAST = Decimal(str(50.11))
+    EAST_NORTHEAST = Decimal(str(60.11))
+    EAST = Decimal(str(80.11))
+    EAST_SOUTHEAST = Decimal(str(110.11))
+    SOUTH_EAST = Decimal(str(130.11))
+    SOUTH_SOUTHEAST = Decimal(str(150.11))
+    SOUTH = Decimal(str(170.11))
+    SOUTH_SOUTHWEST = Decimal(str(205.11))
+    SOUTH_WEST = Decimal(str(225.11))
+    WEST_SOUTHWEST = Decimal(str(245.11))
+    WEST = Decimal(str(270.11))
+    WEST_NORTHWEST = Decimal(str(290.11))
+    NORTH_WEST = Decimal(str(310.11))
+    NORTH_NORTHWEST = Decimal(str(330.11))
