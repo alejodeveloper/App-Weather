@@ -16,3 +16,7 @@ class ApiResponsesData(Enum):
 class GeneralTestConstants(Enum):
     CITY_SLUG = "London"
     COUNTRY_SLUG = "gb"
+
+
+class MockedRequestMethods(Enum):
+    WEATHER_API_GET = "weather_app.services.open_weather_api.requests.get"

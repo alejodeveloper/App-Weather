@@ -13,7 +13,7 @@ from unittest.mock import patch, mock_open
 from django.core.management import call_command
 
 from .test_constants import ApiResponsesData, ApiResponsesCode, \
-    GeneralTestConstants
+    GeneralTestConstants, MockedRequestMethods
 from .utils import MockResponse
 from weather.exceptions import APIRequestException
 from services.open_weather_api import OpenWeatherApi
@@ -53,8 +53,7 @@ class TestApiCalls(unittest.TestCase):
         call_command('loaddata', json_path, verbosity=0)
 
     def test_api_ok_response(self):
-        with patch('app.services.open_weather_api.requests.get') as \
-                request_mock:
+        with patch(MockedRequestMethods.WEATHER_API_GET.value) as request_mock:
             request_mock.return_value = MockResponse(
                 MOCKED_API_RESPONSES.get(
                     ApiResponsesData.LONDON_RESPONSE.value
@@ -66,16 +65,16 @@ class TestApiCalls(unittest.TestCase):
             GeneralTestConstants.COUNTRY_SLUG.value
         )
 
-        test_response = test_api.get_country_city_weather_data()
+        test_status_code, _ = \
+            test_api.get_country_city_weather_data()
 
         self.assertEqual(
             ApiResponsesCode.OK_RESPONSE_CODE.value,
-            test_response.status_code
+            test_status_code
         )
 
     def test_unathorized_response(self):
-        with patch('app.services.open_weather_api.requests.get') as \
-                request_mock:
+        with patch(MockedRequestMethods.WEATHER_API_GET.value) as request_mock:
             request_mock.return_value = MockResponse(
                 MOCKED_API_RESPONSES.get(
                     ApiResponsesData.UNAUTHORIZED_RESPONSE.value

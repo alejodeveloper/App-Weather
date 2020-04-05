@@ -30,7 +30,7 @@ class OpenWeatherApi:
         :return: Tuple with the status code and  Weather data corresponding to
         the city slug
         """
-        api_url = f"{self.base_url}/weather"
+        api_url = f"{self.base_url}weather"
         request_params = dict(
             q=f"{self.city_slug},{self.country_slug}",
             appid=settings.OPEN_WEATHER_API_ID_KEY
