@@ -33,7 +33,8 @@ class OpenWeatherApi:
         api_url = f"{self.base_url}weather"
         request_params = dict(
             q=f"{self.city_name},{self.country_slug}",
-            appid=settings.OPEN_WEATHER_API_ID_KEY
+            appid=settings.OPEN_WEATHER_API_ID_KEY,
+            units=ApiConstants.UNITS.value
         )
         response = requests.get(api_url, params=request_params)
 

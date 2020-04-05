@@ -3,6 +3,7 @@ weather.utils
 -------------
 Utility file for diverse purposes
 """
+from datetime import datetime
 from decimal import Decimal
 
 
@@ -23,3 +24,14 @@ def decimal_range(
     while start < stop:
         yield start
         start += step
+
+
+def transform_number_date(timestamp: int) -> datetime:
+    """
+    Transform a timestamp into a datetime object
+    :param timestamp: Integer with the timestamp value
+    :return: A datetime object from the timestamp
+    """
+    date_return = datetime.fromtimestamp(timestamp)
+
+    return date_return

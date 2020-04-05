@@ -7,13 +7,25 @@ OpenWeatherAPI services and APIViews
 from decimal import Decimal
 
 from services.open_weather_api import OpenWeatherApi
-from weather.constants import DegreesRanges, WeatherConstants
+from weather.constants import DegreesRanges, WeatherConstants, DeafultConstants, \
+    TimeFormat
 from weather.exceptions import CityDoesNotExistsException, APIRequestException
 from weather.models import CityWeather
+from weather.utils import transform_number_date
 
 
 class OpenWeather:
-    def __init__(self, city_name: str, country_slug: str, city_slug: str = None):
+    """
+    OpenWeather Singleton to handle and transforms data from  OpenWeatherAPI
+    """
+    def __init__(
+            self,
+            city_name: str,
+            country_slug: str,
+            city_slug: str = None
+    ):
+        self.city_name = city_name
+        self.country_slug = country_slug.upper()
         try:
             self.city = CityWeather.get_city(
                 city_name=city_name,
@@ -55,8 +67,8 @@ class OpenWeather:
             "location_name": "Bogota, CO",
             "temperature": "17 °C",
             "wind": Gentle breeze, 3.6 m/s, west-northwest",
-            "cloudines": "Scattered clouds",
-            "presure": "1027 hpa",
+            "cloudiness": "Scattered clouds",
+            "pressure": "1027 hpa",
             "humidity": "63%",
             "sunrise": "06:07",
             "sunset": "18:00",
@@ -64,7 +76,60 @@ class OpenWeather:
             "requested_time": "2018-01-09 11:57:00"
         }
         """
-        pass
+
+        weather = response_data.get(
+            "weather", DeafultConstants.DEFAULT_WEATHER_DICT.value
+        )[0]
+        main = response_data.get(
+            "main", DeafultConstants.DEFAULT_MAIN_DICT.value
+        )
+        wind = response_data.get(
+            "wind", DeafultConstants.DEFAULT_WIND_DICT.value
+        )
+        degree_transformed = self.transform_degrees(
+            Decimal(str(wind.get("deg")))
+        )
+        sys_data = response_data.get(
+            "sys", DeafultConstants.DEFAULT_SYS_DICT.value
+        )
+        coordinates_data = response_data.get(
+            "coord", DeafultConstants.DEFAULT_COORD_DICT.value
+        )
+
+        sunrise = transform_number_date(sys_data.get("sunrise")).strftime(
+            TimeFormat.hours_minutes.value
+        )
+        sunset = transform_number_date(sys_data.get("sunrise")).strftime(
+            TimeFormat.hours_minutes.value
+        )
+        requested_time = transform_number_date(
+            response_data.get("dt")
+        ).strftime(TimeFormat.datetime.value)
+
+        wind_speed = wind.get("speed")
+        humidity = main.get("humidity")
+        pressure = main.get("pressure")
+        temperature = main.get("temp")
+        latitude = coordinates_data.get("lat")
+        longitude = coordinates_data.get("lon")
+
+        wind_description = weather.get("description")
+        cloudiness = weather.get("main")
+
+        data_response = dict(
+            location_name=f"{self.city_name}, {self.country_slug}",
+            temperature=f"{temperature} °C",
+            wind=f"{wind_description}, {wind_speed} m/s, {degree_transformed}",
+            cloudiness=f"{cloudiness}",
+            pressure=f"{pressure} hpa",
+            humidity=f"{humidity}%",
+            sunrise=f"{sunrise}",
+            sunset=f"{sunset}",
+            geo_coordinates=f"[{latitude} - {longitude}]",
+            requested_time=requested_time,
+        )
+
+        return data_response
 
     @staticmethod
     def transform_degrees(degrees: Decimal) -> str:

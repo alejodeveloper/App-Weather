@@ -14,6 +14,11 @@ class ApiResponsesData(Enum):
     LONDON_RESPONSE = "london_response"
 
 
+class TimestampsConstants(Enum):
+    APRIL_FIVE_2020 = 1586083995
+    MARCH_TWENTY_TWO_1974 = 133185600
+
+
 class GeneralTestConstants(Enum):
     CITY_SLUG = "London"
     COUNTRY_SLUG = "gb"

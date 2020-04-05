@@ -6,6 +6,39 @@ from weather.utils import decimal_range
 
 class ApiConstants(Enum):
     OK_STATUS_CODE = 200
+    UNITS = "metric"
+
+
+class TimeFormat(Enum):
+    regular_date = "%Y-%m-%d"
+    hours_minutes = "%H:%M"
+    datetime = "%Y-%m-%d %H:%M"
+
+
+class DeafultConstants(Enum):
+    DEFAULT_WEATHER_DICT = list(
+        dict(
+            main="Bad response",
+            description="Bad response",
+        )
+    )
+    DEFAULT_MAIN_DICT = dict(
+        temp="Bad response",
+        humidity="Bad response",
+        pressure="Bad response",
+    )
+    DEFAULT_WIND_DICT = dict(
+        speed="Bad response",
+        deg=0,
+    )
+    DEFAULT_COORD_DICT = dict(
+        lon="Bad response",
+        lat="Bad response",
+    )
+    DEFAULT_SYS_DICT = dict(
+        sunrise="Bad response",
+        sunset="Bad response",
+    )
 
 
 class WeatherConstants(Enum):

@@ -4,10 +4,12 @@ weather.tests.test_open_weather_utilities
 Test the utils file from weather.open_weather_utility
 """
 import unittest
+from datetime import date, datetime
 
 from weather.constants import WeatherConstants
 from weather.open_weather_utils import OpenWeather
-from weather.tests.test_constants import DegreesConstants
+from weather.tests.test_constants import DegreesConstants, TimestampsConstants
+from weather.utils import transform_number_date
 
 
 class TestOpenWeatherUtils(unittest.TestCase):
@@ -57,3 +59,23 @@ class TestOpenWeatherUtils(unittest.TestCase):
         self.assertTrue(
             test_south_southwest == WeatherConstants.SOUTH_SOUTHWEST.value
         )
+
+
+class TestConvertTimestamp(unittest.TestCase):
+
+    def test_convert_timestamp(self):
+        april_5_2020 = date(month=4, day=5, year=2020)
+        march_22_1974 = date(month=3, day=22, year=1974)
+
+        test_april = transform_number_date(
+            TimestampsConstants.APRIL_FIVE_2020.value
+        )
+        test_march = transform_number_date(
+            TimestampsConstants.MARCH_TWENTY_TWO_1974.value
+        )
+
+        self.assertIsInstance(test_april, datetime)
+        self.assertIsInstance(test_march, datetime)
+
+        self.assertTrue(test_april.date() == april_5_2020)
+        self.assertTrue(test_march.date() == march_22_1974)
