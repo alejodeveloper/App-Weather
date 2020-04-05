@@ -105,21 +105,6 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -143,8 +128,8 @@ STATIC_URL = '/static/'
 ################################################################################
 ########################### OPEN WEATHER API SETTINGS  #########################
 ################################################################################
-OPEN_WEATHER_API_BASE_URL = 'http://api.openweathermap.org/data/2.5/'
-OPEN_WEATHER_API_ID_KEY = '947bc1a08e6036c9316f890728609202'
+OPEN_WEATHER_API_BASE_URL = 'http://url.some/api/2.5/'
+OPEN_WEATHER_API_ID_KEY = 'dummy_key'
 
 ################################################################################
 ############################# CELERY SETTINGS  #################################
