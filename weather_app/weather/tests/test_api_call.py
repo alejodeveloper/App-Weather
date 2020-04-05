@@ -8,7 +8,7 @@ import os
 
 import unittest
 
-from unittest.mock import patch, mock_open
+from unittest.mock import patch
 
 from django.core.management import call_command
 
@@ -50,10 +50,6 @@ class TestApiCalls(unittest.TestCase):
 
     def setUp(self) -> None:
         self.test_api = OpenWeatherApi
-        json_path = os.path.join(
-            dir_path, 'fixtures', 'tested_data.json'
-        )
-        call_command('loaddata', json_path, verbosity=0)
 
     def test_api_ok_response(self):
         with patch('weather_app.services.open_weather_api.requests.get') as \
