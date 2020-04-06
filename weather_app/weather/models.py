@@ -5,9 +5,11 @@ Model for the weather app
 """
 from datetime import date
 
+from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
+from .constants import ApiConstants
 from .exceptions import CityDoesNotExistsException
 
 
@@ -71,7 +73,7 @@ class LogResponse(models.Model):
     Class model for logging the API response
     """
     log_date = models.DateField(blank=False, null=False)
-    response = models.TextField(null=False, blank=False)
+    response = JSONField(default=dict)
     status_response = models.IntegerField()
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -110,6 +112,25 @@ class CityWeatherLog(models.Model):
     )
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def get_city_log(
+            cls,
+            city: CityWeather,
+            status_code: int = ApiConstants.OK_STATUS_CODE.value):
+        """
+        Get the last CityWeatherLog queried by CityWeather
+        :param city: CityWeather object instance
+        :param status_code: Status code of the response
+        :return: Queryset of the instance
+        """
+        city_weather_log = cls.objects.filter(
+            city=city,
+            response_log__status_response=status_code,
+        ).order_by(
+            "-created_at").first()
+
+        return city_weather_log
 
     @classmethod
     def create_city_weather_log(

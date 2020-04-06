@@ -123,27 +123,3 @@ class TestApiHandler(unittest.TestCase):
                 ExpectedDicts.BOGOTA_FORMATTED_DICT.value,
                 test_formatted_data
             )
-
-    def test_api_handler_exception(self):
-        with patch('weather_app.services.open_weather_api.requests.get') as \
-                request_mock:
-            request_mock.return_value = MockResponse(
-                MOCKED_API_RESPONSES.get(
-                    ApiResponsesData.SERVER_ERROR_RESPONSE.value
-                ),
-                ApiResponsesCode.SERVER_ERROR_RESPONSE_CODE.value
-            )
-            test_handler = self.test_handler(
-                city_name=HandlerConstants.BOGOTA_NAME.value,
-                country_slug=HandlerConstants.COLOMBIA_SLUG.value,
-                city_slug=HandlerConstants.BOGOTA_SLUG.value,
-            )
-            test_formatted_data = \
-                test_handler.retrieve_weather_data()
-
-            self.assertIsInstance(
-                test_formatted_data.get('exception'), Exception
-            )
-            self.assertIsInstance(
-                test_formatted_data.get('error_message'), str
-            )

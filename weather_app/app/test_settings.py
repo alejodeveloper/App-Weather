@@ -152,3 +152,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Bogota'
 
+
+################################################################################
+############################## VARIOUS SETTINGS ################################
+################################################################################
+TIME_BETWEEN_SECS = os.environ.get('TIME_BETWEEN_SECS', 300)
+
+
