@@ -9,7 +9,7 @@ API to connect Open Weather API and get climate data for a specific city
 After clone the repo
 ```
 cd where_repo_was_clone
-make start-dev
+source start.sh;
 ```
 
 This should be run the project in `localhost` over the PORT `8000`
@@ -33,6 +33,12 @@ RESPONSE  *200*
     "sunset": "18:41",
     "geo_coordinates": "[51.51 - -0.13]",
     "requested_time": "2020-04-06 02:23"
+}
+```
+RESPONSE  *400*
+```
+{
+    "message_error": "The request must be made with country slug and city slug, current are city None and country None"
 }
 ```
 
