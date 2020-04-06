@@ -4,13 +4,15 @@ weather.open_weather_utils
 Utility file to handle the API call and works as communication layer between
 OpenWeatherAPI services and APIViews
 """
+import json
+from datetime import datetime, timezone
 from decimal import Decimal
 
 from services.open_weather_api import OpenWeatherApi
 from weather.constants import DegreesRanges, WeatherConstants, DeafultConstants, \
     TimeFormat
 from weather.exceptions import CityDoesNotExistsException, APIRequestException
-from weather.models import CityWeather
+from weather.models import CityWeather, CityWeatherLog
 from weather.utils import transform_number_date, decimal_range
 
 
@@ -49,14 +51,49 @@ class OpenWeather:
         :return: Dict with the response if it was successful
         """
         try:
-            _, open_weather_response = self.open_weather_api.\
-                get_country_city_weather_data()
+            no_data, open_weather_response = self.verify_logged_data()
+            if no_data:
+                status_code_response, open_weather_response = \
+                    self.open_weather_api.get_country_city_weather_data()
 
-            response_data = self.transform_response_data(open_weather_response)
+                CityWeatherLog.create_city_weather_log(
+                    city=self.city,
+                    status_code=status_code_response,
+                    response_data=open_weather_response
+                )
+
+            response_data = self.transform_response_data(
+                open_weather_response
+            )
             return response_data
         except APIRequestException as e:
             import traceback
             return dict(error_message=traceback.format_exc(), exception=e)
+
+    def verify_logged_data(self) -> (bool, dict):
+        """
+        Method to verify previously the logged data
+        If the previous data doesn't exists or its difference is bigger than
+        300 seconds return false, otherwise the log instance
+        :return: A tuple with a boolean that indicates if is necessaty or not to
+        make an another request to the API and a dict with the logged data or
+        empty
+        """
+        previous_data = CityWeatherLog.get_city_log(self.city)
+
+        if previous_data is None:
+            return True, {}
+
+        time_now = datetime.now(timezone.utc)
+        time_delta = time_now - previous_data.created_at
+
+        if time_delta.seconds > DeafultConstants.TIME_BETWEEN_LOGS.value:
+            return True, {}
+
+        response_return = previous_data.response_log.response
+        if isinstance(response_return, str):
+            response_return = json.loads(response_return)
+        return False, response_return
 
     def transform_response_data(self, response_data: dict) -> dict:
         """

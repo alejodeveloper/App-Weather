@@ -1,5 +1,8 @@
 # App-Weather
-API to connect know weather
+API to connect Open Weather API and get climate data for a specific city
+
+![alt text](https://upload.wikimedia.org/wikipedia/commons/e/ea/Cirrus-fibratus.jpg)
+
 
 ### App-Weather install
 
@@ -11,11 +14,11 @@ make start-dev
 
 This should be run the project in `localhost` over the PORT `8000`
 
-### Basic Requests V1
-##### GET URL `api/v1/weather` 
+### Basic Requests V2
+##### GET URL `api/v2/weather` 
 Parameters `city: String` `country: String` 
 
-test_example_url `localhost:8000/api/v1/weather?city=London&country=uk`
+test_example_url `localhost:8000/api/v2/weather?city=London&country=uk`
 
 RESPONSE  *200*
 ```
@@ -32,3 +35,8 @@ RESPONSE  *200*
     "requested_time": "2020-04-06 02:23"
 }
 ```
+
+##Version 2 improvements
+Add postgres log layer and verify with the logs if a request was made
+ within a configurable setting time value and pull it off from database or
+ make the request 
