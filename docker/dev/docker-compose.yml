@@ -5,7 +5,8 @@ services:
     image: weather-app/dev
     container_name: weather-app
     entrypoint: sh docker-entrypoint.sh
-
+    depends_on:
+      - postgresql-weather-app
     ports:
       - "8000:8000"
     networks:
@@ -19,8 +20,6 @@ services:
       - POSTGRES_DB=weather-app
     ports:
       - "5432:5432"
-    volumes:
-      - ../../../.data/pgsql-weather-postgresql:/var/lib/postgresql/data
     networks:
       - weather-app-nt
 
@@ -29,7 +28,10 @@ services:
     image: weather-app/dev
     container_name: weather-celery
     entrypoint: celery -A app worker --loglevel=INFO --beat
-
+    depends_on:
+      - postgresql-weather-app
+      - rabbit-weather
+      - redis-weather
     environment:
      - "CELERY=True"
      - "REDIS_HOST=redis-weather"

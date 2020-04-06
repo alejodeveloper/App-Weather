@@ -162,3 +162,4 @@ CELERY_TIMEZONE = 'America/Bogota'
 ############################## VARIOUS SETTINGS ################################
 ################################################################################
 TIME_BETWEEN_SECS = os.environ.get('TIME_BETWEEN_SECS', 300)
+TIME_ELAPSE_FOR_TASK = os.environ.get('TIME_BETWEEN_SECS', 3600)
