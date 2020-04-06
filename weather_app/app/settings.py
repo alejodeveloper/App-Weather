@@ -144,7 +144,13 @@ if os.environ.get('CELERY', False):
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-weather')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+
+RABBIT_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'admin')
+RABBIT_PSSWD = os.environ.get('RABBITMQ_DEFAULT_PASS', 'mypass')
+RABBIT_HOST = os.environ.get('RABBITMQ_DEFAULT_HOST', 'rabbit-weather')
+RABBIT_PORT = os.environ.get('RABBITMQ_DEFAULT_PORT', '5672')
+
+CELERY_BROKER_URL = f'amqp://{RABBIT_USER}:{RABBIT_PSSWD}@{RABBIT_HOST}:{RABBIT_PORT}'
 CELERY_RESULT_BACKEND = None
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'

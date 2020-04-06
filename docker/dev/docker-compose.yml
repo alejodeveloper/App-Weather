@@ -38,7 +38,18 @@ services:
      - "DB_HOST=postgresql-weather-app"
     networks:
       - weather-app-nt
-
+  #rabbit
+  rabbit-weather:
+    hostname: rabbit
+    image: rabbitmq:latest
+    container_name: weather-rabbit
+    networks:
+      - weather-app-nt
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5673:5672"
   # redis
   redis-weather:
     image: redis
