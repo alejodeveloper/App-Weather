@@ -23,10 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$3)(=!46e0ed#fnzhub9k(5_%cvn#94_9pzkzrwd9&70(00hl-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'taskapp.celery.CeleryConfig',
+    'celery',
     'rest_framework',
     'weather',
 ]
@@ -72,28 +71,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
@@ -101,6 +83,27 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get(
+            'DB_ENGINE', 'django.db.backends.postgresql_psycopg2'
+        ),
+        'NAME': os.environ.get('DB_NAME', 'weather-app'),
+        'USER': os.environ.get('DB_USERNAME', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'somepwd112233'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
+
+
+# Password validation
+# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 
 # Internationalization
@@ -121,3 +124,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+################################################################################
+########################### OPEN WEATHER API SETTINGS  #########################
+################################################################################
+OPEN_WEATHER_API_BASE_URL = 'http://url.some/api/2.5/'
+OPEN_WEATHER_API_ID_KEY = 'dummy_key'
+
+################################################################################
+############################# CELERY SETTINGS  #################################
+################################################################################
+if os.environ.get('CELERY_KRAVEN', False):
+    remove_apps = [
+        'django.contrib.sessions',
+        'django.contrib.staticfiles',
+        'rest_framework',
+    ]
+    for aplication in remove_apps:
+        INSTALLED_APPS.remove(aplication)
+
+BROKER_URL = os.environ.get(
+    'CELERY_BROKER_URL_KRAVEN', 'redis://platzi-kraven-redis:6379/0'
+)
+CELERY_RESULT_BACKEND = None
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Bogota'
+
