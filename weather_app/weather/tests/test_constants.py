@@ -12,6 +12,43 @@ class ApiResponsesData(Enum):
     UNAUTHORIZED_RESPONSE = "unathorized_response"
     SERVER_ERROR_RESPONSE = "server_error_response"
     LONDON_RESPONSE = "london_response"
+    BOGOTA_RESPONSE = "bogota_response"
+
+
+class HandlerConstants(Enum):
+    BOGOTA_NAME = "Bogota"
+    BOGOTA_SLUG = "bogota"
+    COLOMBIA_SLUG = "co"
+    LONDON_NAME = "London"
+    GB_SLUG = "gb"
+    UK_SLUG = "uk"
+
+
+class ExpectedDicts(Enum):
+    BOGOTA_FORMATTED_DICT = dict(
+        location_name="Bogota, CO",
+        temperature="19 °C",
+        wind="broken clouds, 2.1 m/s, north",
+        cloudiness="Clouds",
+        pressure='1025 hpa',
+        humidity='52%',
+        sunrise='10:53',
+        sunset='23:04',
+        geo_coordinates="[4.61 - -74.08]",
+        requested_time="2020-04-05 23:30"
+    )
+    BOGOTA_BAD_FORMATTED_DICT = dict(
+        location_name="Bogota, CO",
+        temperature="Bad response °C",
+        wind="Bad response, Bad response m/s, None",
+        cloudiness="Bad response",
+        pressure='Bad response hpa',
+        humidity='Bad response%',
+        sunrise='00:00',
+        sunset='00:00',
+        geo_coordinates="[Bad response - Bad response]",
+        requested_time="1970-01-01 00:00"
+    )
 
 
 class TimestampsConstants(Enum):

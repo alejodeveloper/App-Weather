@@ -1,6 +1,6 @@
 """
-weather.open_weather_utility
-----------------------------
+weather.open_weather_utils
+--------------------------
 Utility file to handle the API call and works as communication layer between
 OpenWeatherAPI services and APIViews
 """
@@ -42,7 +42,7 @@ class OpenWeather:
             country_slug=country_slug
         )
 
-    def retrieve_weather_data(self):
+    def retrieve_weather_data(self) -> dict:
         """
         Method to connect with the OpenWeatherAPI and retrieve the data for
         the given city
@@ -55,7 +55,7 @@ class OpenWeather:
             response_data = self.transform_response_data(open_weather_response)
             return response_data
         except APIRequestException as e:
-            return e.message
+            return dict(error_message=e.message, exception=e)
 
     def transform_response_data(self, response_data: dict) -> dict:
         """
@@ -87,7 +87,10 @@ class OpenWeather:
             "wind", DeafultConstants.DEFAULT_WIND_DICT.value
         )
         degree_transformed = self.transform_degrees(
-            Decimal(str(wind.get("deg")))
+            Decimal(str(wind.get(
+                "deg",
+                DeafultConstants.DEFAULT_DEGREES.value
+            )))
         )
         sys_data = response_data.get(
             "sys", DeafultConstants.DEFAULT_SYS_DICT.value
@@ -99,11 +102,11 @@ class OpenWeather:
         sunrise = transform_number_date(sys_data.get("sunrise")).strftime(
             TimeFormat.hours_minutes.value
         )
-        sunset = transform_number_date(sys_data.get("sunrise")).strftime(
+        sunset = transform_number_date(sys_data.get("sunset")).strftime(
             TimeFormat.hours_minutes.value
         )
         requested_time = transform_number_date(
-            response_data.get("dt")
+            response_data.get("dt", DeafultConstants.DEFAULT_TIMESTAMP.value)
         ).strftime(TimeFormat.datetime.value)
 
         wind_speed = wind.get("speed")

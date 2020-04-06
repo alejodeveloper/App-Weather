@@ -16,12 +16,12 @@ class TimeFormat(Enum):
 
 
 class DeafultConstants(Enum):
-    DEFAULT_WEATHER_DICT = list(
+    DEFAULT_WEATHER_DICT = [
         dict(
             main="Bad response",
             description="Bad response",
         )
-    )
+    ]
     DEFAULT_MAIN_DICT = dict(
         temp="Bad response",
         humidity="Bad response",
@@ -36,9 +36,11 @@ class DeafultConstants(Enum):
         lat="Bad response",
     )
     DEFAULT_SYS_DICT = dict(
-        sunrise="Bad response",
-        sunset="Bad response",
+        sunrise=1,
+        sunset=1,
     )
+    DEFAULT_TIMESTAMP = 1
+    DEFAULT_DEGREES = Decimal(0)
 
 
 class WeatherConstants(Enum):
