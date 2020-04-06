@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'taskapp.celery.CeleryConfig',
+    'celery',
     'rest_framework',
     'weather',
 ]
@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'weather-app'),
         'USER': os.environ.get('DB_USERNAME', 'postgres'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'somepwd112233'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'HOST': os.environ.get('DB_HOST', 'postgresql-weather-app'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
@@ -133,7 +133,7 @@ OPEN_WEATHER_API_ID_KEY = '3af74f6f0640076e02302684ea76ba8a'
 ################################################################################
 ############################# CELERY SETTINGS  #################################
 ################################################################################
-if os.environ.get('CELERY_KRAVEN', False):
+if os.environ.get('CELERY', False):
     remove_apps = [
         'django.contrib.sessions',
         'django.contrib.staticfiles',
@@ -142,12 +142,11 @@ if os.environ.get('CELERY_KRAVEN', False):
     for aplication in remove_apps:
         INSTALLED_APPS.remove(aplication)
 
-BROKER_URL = os.environ.get(
-    'CELERY_BROKER_URL_KRAVEN', 'redis://platzi-kraven-redis:6379/0'
-)
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-weather')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 CELERY_RESULT_BACKEND = None
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Bogota'
-

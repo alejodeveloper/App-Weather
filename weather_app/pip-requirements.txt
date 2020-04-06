@@ -10,3 +10,4 @@ Fabric3==1.14.post1
 psycopg2-binary
 query-string==2019.4.13
 requests==2.23.0
+redis==3.4.1
