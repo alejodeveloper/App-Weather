@@ -14,4 +14,9 @@ urlpatterns = [
         views.WeatherAPI.as_view(),
         name='weather_url',
     ),
+    path(
+        'v3/weather',
+        views.CreateRequestAPI.as_view(),
+        name='weather_url_v3',
+    ),
 ]
