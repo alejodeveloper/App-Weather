@@ -5,8 +5,7 @@ services:
     image: weather-app/dev
     container_name: weather-app
     entrypoint: sh docker-entrypoint.sh
-#    volumes:
-#      - ../../weather_app:/app/weather_app
+
     ports:
       - "8000:8000"
     networks:
@@ -30,8 +29,7 @@ services:
     image: weather-app/dev
     container_name: weather-celery
     entrypoint: celery -A app worker --loglevel=INFO --beat
-#    volumes:
-#      - ../../weather_app:/app/weather_app
+
     environment:
      - "CELERY=True"
      - "REDIS_HOST=redis-weather"
