@@ -2,10 +2,11 @@ version: '2'
 services:
   # django
   weather-app:
-    image: ubuntu
+    image: weather-app/dev
     container_name: weather-app
-    volumes:
-      - ../../weather_app:/app/weather_app
+    entrypoint: sh docker-entrypoint.sh
+#    volumes:
+#      - ../../weather_app:/app/weather_app
     ports:
       - "8000:8000"
     networks:
@@ -26,13 +27,17 @@ services:
 
     # celery beat
   celery-weather:
-    image: celery
+    image: weather-app/dev
     container_name: weather-celery
-    entrypoint: celery -A taskapp worker --workdir=/app/weather_app/ --loglevel=INFO --beat
-    volumes:
-     - ../../:/app/
+    entrypoint: celery -A app worker --loglevel=INFO --beat
+#    volumes:
+#      - ../../weather_app:/app/weather_app
     environment:
-     - CELERY=True
+     - "CELERY=True"
+     - "REDIS_HOST=redis-weather"
+     - "DB_PASSWORD=somepwd112233"
+     - "DB_NAME=weather-app"
+     - "DB_HOST=postgresql-weather-app"
     networks:
       - weather-app-nt
 

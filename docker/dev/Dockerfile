@@ -5,8 +5,11 @@ RUN apt-get update && apt-get install -y gcc ssh openssh-server gettext postgres
 
 RUN mkdir /app/
 
-COPY pip-requirements.txt /tmp/pip-requirements.txt
-RUN pip install -r /tmp/pip-requirements.txt
+WORKDIR /app
+
+COPY ./weather_app/ /app/
+COPY ./docker-entrypoint.sh /app/
+RUN pip install -r pip-requirements.txt
 
 RUN mkdir /var/run/sshd
 
