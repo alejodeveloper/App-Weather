@@ -101,3 +101,7 @@ class DegreesRanges(Enum):
     NORTH_WEST_STOP = Decimal(str(326.25))
     NORTH_NORTHWEST_START = Decimal(str(326.25))
     NORTH_NORTHWEST_STOP = Decimal(str(348.75))
+
+
+class ApiViewConstants(Enum):
+    ERROR_MESSAGE = "error_message"

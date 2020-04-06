@@ -65,6 +65,11 @@ class MockedRequestMethods(Enum):
     WEATHER_API_GET = "weather_app.services.open_weather_api.requests.get"
 
 
+class MockedHandler(Enum):
+    WEATHER_HANDLER = "weather_app.weather.open_weather_utils" \
+        ".OpenWeather"
+
+
 class DegreesConstants(Enum):
     NORTH = Decimal(str(5.11))
     NORTH_NORTHEAST = Decimal(str(25.11))
@@ -82,3 +87,13 @@ class DegreesConstants(Enum):
     WEST_NORTHWEST = Decimal(str(290.11))
     NORTH_WEST = Decimal(str(310.11))
     NORTH_NORTHWEST = Decimal(str(330.11))
+
+
+class DjangoTestEndpointUrls(Enum):
+    TEST_WEATHER_APP = "weather_urls"
+    TEST_WEATHER_URL = "weather_url"
+
+
+class TestApiParams(Enum):
+    BOGOTA_CITY = "Bogota"
+    BOGOTA_COUNTRY = "co"

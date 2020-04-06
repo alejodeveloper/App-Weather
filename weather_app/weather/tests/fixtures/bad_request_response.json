@@ -1,0 +1,3 @@
+{
+    "message_error": "The request must be made with country slug and city slug, current are city Bogota and country None"
+}

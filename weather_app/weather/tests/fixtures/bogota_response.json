@@ -1,0 +1,12 @@
+{
+    "location_name": "Bogota, CO",
+    "temperature": "16 °C",
+    "wind": "scattered clouds, 2.1 m/s, east",
+    "cloudiness": "Clouds",
+    "pressure": "1029 hpa",
+    "humidity": "63%",
+    "sunrise": "10:53",
+    "sunset": "23:04",
+    "geo_coordinates": "[4.61 - -74.08]",
+    "requested_time": "2020-04-06 02:17"
+}
