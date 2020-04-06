@@ -1,0 +1,51 @@
+version: '2'
+services:
+  # django
+  weather-app:
+    image: weather-app/dev
+    container_name: weather-app
+    entrypoint: sh docker-entrypoint.sh
+
+    ports:
+      - "8000:8000"
+    networks:
+      - weather-app-nt
+  # postgresql
+  postgresql-weather-app:
+    image: postgres
+    container_name: weather-postgresql
+    environment:
+      - POSTGRES_PASSWORD=somepwd112233
+      - POSTGRES_DB=weather-app
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../../../.data/pgsql-weather-postgresql:/var/lib/postgresql/data
+    networks:
+      - weather-app-nt
+
+    # celery beat
+  celery-weather:
+    image: weather-app/dev
+    container_name: weather-celery
+    entrypoint: celery -A app worker --loglevel=INFO --beat
+
+    environment:
+     - "CELERY=True"
+     - "REDIS_HOST=redis-weather"
+     - "DB_PASSWORD=somepwd112233"
+     - "DB_NAME=weather-app"
+     - "DB_HOST=postgresql-weather-app"
+    networks:
+      - weather-app-nt
+
+  # redis
+  redis-weather:
+    image: redis
+    container_name: weather-redis
+    networks:
+      - weather-app-nt
+
+networks:
+  weather-app-nt:
+    external: true
