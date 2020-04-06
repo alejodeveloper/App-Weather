@@ -1,7 +1,10 @@
+"""
+weather.constants
+-----------------
+Constants file composed majority by enumerators
+"""
 from decimal import Decimal
 from enum import Enum
-
-from weather.utils import decimal_range
 
 
 class ApiConstants(Enum):
@@ -40,7 +43,7 @@ class DeafultConstants(Enum):
         sunset=1,
     )
     DEFAULT_TIMESTAMP = 1
-    DEFAULT_DEGREES = Decimal(0)
+    DEFAULT_DEGREES = 0
 
 
 class WeatherConstants(Enum):
@@ -63,88 +66,38 @@ class WeatherConstants(Enum):
 
 
 class DegreesRanges(Enum):
-    NORTH_A = decimal_range(
-            start=Decimal(str(348.75)),
-            stop=Decimal(str(360)),
-            step=Decimal(str(0.01))
-    )
-    NORTH_B = decimal_range(
-        start=Decimal(str(0)),
-        stop=Decimal(str(11.25)),
-        step=Decimal(str(0.01))
-    )
-    NORTH_NORTHEAST = decimal_range(
-            start=Decimal(str(11.25)),
-            stop=Decimal(str(33.75)),
-            step=Decimal(str(0.01))
-    )
-    NORTH_EAST = decimal_range(
-            start=Decimal(str(33.75)),
-            stop=Decimal(str(56.25)),
-            step=Decimal(str(0.01))
-    )
-    EAST_NORTHEAST = decimal_range(
-            start=Decimal(str(56.25)),
-            stop=Decimal(str(78.75)),
-            step=Decimal(str(0.01))
-    )
-    EAST = decimal_range(
-            start=Decimal(str(78.75)),
-            stop=Decimal(str(101.25)),
-            step=Decimal(str(0.01))
-    )
-    EAST_SOUTHEAST = decimal_range(
-            start=Decimal(str(101.25)),
-            stop=Decimal(str(123.75)),
-            step=Decimal(str(0.01))
-    )
-    SOUTH_EAST = decimal_range(
-            start=Decimal(str(123.75)),
-            stop=Decimal(str(146.25)),
-            step=Decimal(str(0.01))
-    )
-    SOUTH_SOUTHEAST = decimal_range(
-            start=Decimal(str(146.25)),
-            stop=Decimal(str(168.75)),
-            step=Decimal(str(0.01))
-    )
-    SOUTH = decimal_range(
-            start=Decimal(str(168.75)),
-            stop=Decimal(str(191.25)),
-            step=Decimal(str(0.01))
-    )
-    SOUTH_SOUTHWEST = decimal_range(
-            start=Decimal(str(191.25)),
-            stop=Decimal(str(213.75)),
-            step=Decimal(str(0.01))
-    )
-    SOUTH_WEST = decimal_range(
-            start=Decimal(str(213.75)),
-            stop=Decimal(str(236.25)),
-            step=Decimal(str(0.01))
-    )
-    WEST_SOUTHWEST = decimal_range(
-            start=Decimal(str(236.25)),
-            stop=Decimal(str(258.75)),
-            step=Decimal(str(0.01))
-    )
-    WEST = decimal_range(
-            start=Decimal(str(258.75)),
-            stop=Decimal(str(281.25)),
-            step=Decimal(str(0.01))
-    )
-    WEST_NORTHWEST = decimal_range(
-            start=Decimal(str(281.25)),
-            stop=Decimal(str(303.75)),
-            step=Decimal(str(0.01))
-    )
-    NORTH_WEST = decimal_range(
-            start=Decimal(str(303.75)),
-            stop=Decimal(str(326.25)),
-            step=Decimal(str(0.01))
-    )
-    NORTH_NORTHWEST = decimal_range(
-            start=Decimal(str(326.25)),
-            stop=Decimal(str(348.75)),
-            step=Decimal(str(0.01))
-    )
+    DEFAULT_STEP = Decimal(str(0.01))
+    NORTH_A_START = Decimal(str(348.75))
+    NORTH_A_STOP = Decimal(str(360))
+    NORTH_B_START = Decimal(str(0))
+    NORTH_B_STOP = Decimal(str(11.25))
+    NORTH_NORTHEAST_START = Decimal(str(11.25))
+    NORTH_NORTHEAST_STOP = Decimal(str(33.75))
+    NORTH_EAST_START = Decimal(str(33.75))
+    NORTH_EAST_STOP = Decimal(str(56.25))
+    EAST_NORTHEAST_START = Decimal(str(56.25))
+    EAST_NORTHEAST_STOP = Decimal(str(78.75))
+    EAST_START = Decimal(str(78.75))
+    EAST_STOP = Decimal(str(101.25))
+    EAST_SOUTHEAST_START = Decimal(str(101.25))
+    EAST_SOUTHEAST_STOP = Decimal(str(123.75))
+    SOUTH_EAST_START = Decimal(str(123.75))
+    SOUTH_EAST_STOP = Decimal(str(146.25))
+    SOUTH_SOUTHEAST_START = Decimal(str(146.25))
+    SOUTH_SOUTHEAST_STOP = Decimal(str(168.75))
+    SOUTH_START = Decimal(str(168.75))
+    SOUTH_STOP = Decimal(str(191.25))
+    SOUTH_SOUTHWEST_START = Decimal(str(191.25))
+    SOUTH_SOUTHWEST_STOP = Decimal(str(213.75))
+    SOUTH_WEST_START = Decimal(str(213.75))
+    SOUTH_WEST_STOP = Decimal(str(236.25))
+    WEST_SOUTHWEST_START = Decimal(str(236.25))
+    WEST_SOUTHWEST_STOP = Decimal(str(258.75))
+    WEST_START = Decimal(str(258.75))
+    WEST_STOP = Decimal(str(281.25))
+    WEST_NORTHWEST_START = Decimal(str(281.25))
+    WEST_NORTHWEST_STOP = Decimal(str(303.75))
+    NORTH_WEST_START = Decimal(str(303.75))
+    NORTH_WEST_STOP = Decimal(str(326.25))
+    NORTH_NORTHWEST_START = Decimal(str(326.25))
+    NORTH_NORTHWEST_STOP = Decimal(str(348.75))

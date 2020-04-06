@@ -11,7 +11,7 @@ from weather.constants import DegreesRanges, WeatherConstants, DeafultConstants,
     TimeFormat
 from weather.exceptions import CityDoesNotExistsException, APIRequestException
 from weather.models import CityWeather
-from weather.utils import transform_number_date
+from weather.utils import transform_number_date, decimal_range
 
 
 class OpenWeather:
@@ -143,52 +143,119 @@ class OpenWeather:
         """
         degrees = Decimal(str(degrees))
 
-        if degrees in DegreesRanges.NORTH_A.value or \
-                degrees in DegreesRanges.NORTH_B.value:
+        if degrees in decimal_range(
+                start=DegreesRanges.NORTH_A_START.value,
+                stop=DegreesRanges.NORTH_A_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ) or degrees in decimal_range(
+                start=DegreesRanges.NORTH_B_START.value,
+                stop=DegreesRanges.NORTH_B_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
 
             return WeatherConstants.NORTH.value
 
-        elif degrees in DegreesRanges.NORTH_EAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.NORTH_EAST_START.value,
+                stop=DegreesRanges.NORTH_EAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.NORTH_EAST.value
 
-        elif degrees in DegreesRanges.NORTH_NORTHEAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.NORTH_NORTHEAST_START.value,
+                stop=DegreesRanges.NORTH_NORTHEAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.NORTH_NORTHEAST.value
 
-        elif degrees in DegreesRanges.EAST_NORTHEAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.EAST_NORTHEAST_START.value,
+                stop=DegreesRanges.EAST_NORTHEAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.EAST_NORTHEAST.value
 
-        elif degrees in DegreesRanges.EAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.EAST_START.value,
+                stop=DegreesRanges.EAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.EAST.value
 
-        elif degrees in DegreesRanges.EAST_SOUTHEAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.EAST_SOUTHEAST_START.value,
+                stop=DegreesRanges.EAST_SOUTHEAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.EAST_SOUTHEAST.value
 
-        elif degrees in DegreesRanges.SOUTH_EAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.SOUTH_EAST_START.value,
+                stop=DegreesRanges.SOUTH_EAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.SOUTH_EAST.value
 
-        elif degrees in DegreesRanges.SOUTH_SOUTHEAST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.SOUTH_SOUTHEAST_START.value,
+                stop=DegreesRanges.SOUTH_SOUTHEAST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.SOUTH_SOUTHEAST.value
 
-        elif degrees in DegreesRanges.SOUTH.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.SOUTH_START.value,
+                stop=DegreesRanges.SOUTH_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.SOUTH.value
 
-        elif degrees in DegreesRanges.SOUTH_SOUTHWEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.SOUTH_SOUTHWEST_START.value,
+                stop=DegreesRanges.SOUTH_SOUTHWEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.SOUTH_SOUTHWEST.value
 
-        elif degrees in DegreesRanges.SOUTH_WEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.SOUTH_WEST_START.value,
+                stop=DegreesRanges.SOUTH_WEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.SOUTH_WEST.value
 
-        elif degrees in DegreesRanges.WEST_SOUTHWEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.WEST_SOUTHWEST_START.value,
+                stop=DegreesRanges.WEST_SOUTHWEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.WEST_SOUTHWEST.value
 
-        elif degrees in DegreesRanges.WEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.WEST_START.value,
+                stop=DegreesRanges.WEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.WEST.value
 
-        elif degrees in DegreesRanges.WEST_NORTHWEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.WEST_NORTHWEST_START.value,
+                stop=DegreesRanges.WEST_NORTHWEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.WEST_NORTHWEST.value
 
-        elif degrees in DegreesRanges.NORTH_WEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.NORTH_WEST_START.value,
+                stop=DegreesRanges.NORTH_WEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.NORTH_WEST.value
 
-        elif degrees in DegreesRanges.NORTH_NORTHWEST.value:
+        elif degrees in decimal_range(
+                start=DegreesRanges.NORTH_NORTHWEST_START.value,
+                stop=DegreesRanges.NORTH_NORTHWEST_STOP.value,
+                step=DegreesRanges.DEFAULT_STEP.value
+        ):
             return WeatherConstants.NORTH_NORTHWEST.value

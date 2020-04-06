@@ -40,7 +40,7 @@ class ExpectedDicts(Enum):
     BOGOTA_BAD_FORMATTED_DICT = dict(
         location_name="Bogota, CO",
         temperature="Bad response °C",
-        wind="Bad response, Bad response m/s, None",
+        wind="Bad response, Bad response m/s, north",
         cloudiness="Bad response",
         pressure='Bad response hpa',
         humidity='Bad response%',
