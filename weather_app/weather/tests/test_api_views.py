@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 from django.core.management import call_command
 from django.urls import reverse
+from rest_framework import status
 from rest_framework.test import APIRequestFactory
 
 from .test_constants import DjangoTestEndpointUrls, TestApiParams, \
@@ -61,7 +62,7 @@ class TestWeatherApiViews(unittest.TestCase):
         )
         call_command('loaddata', json_path, verbosity=0)
 
-    def test_500_response(self):
+    def test_200_response(self):
             test_url = reverse(
                 f'{DjangoTestEndpointUrls.TEST_WEATHER_APP.value}:'
                 f'{DjangoTestEndpointUrls.TEST_WEATHER_URL.value}'
@@ -73,4 +74,4 @@ class TestWeatherApiViews(unittest.TestCase):
 
             test_request = self.factory.get(test_url, params)
             test_response = self.view(test_request)
-            self.assertTrue(test_response.status_code == 500)
+            self.assertTrue(test_response.status_code == status.HTTP_200_OK)

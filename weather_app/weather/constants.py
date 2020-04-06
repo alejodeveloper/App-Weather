@@ -6,6 +6,8 @@ Constants file composed majority by enumerators
 from decimal import Decimal
 from enum import Enum
 
+from django.conf import settings
+
 
 class ApiConstants(Enum):
     OK_STATUS_CODE = 200
@@ -44,6 +46,7 @@ class DeafultConstants(Enum):
     )
     DEFAULT_TIMESTAMP = 1
     DEFAULT_DEGREES = 0
+    TIME_BETWEEN_LOGS = settings.TIME_BETWEEN_SECS
 
 
 class WeatherConstants(Enum):

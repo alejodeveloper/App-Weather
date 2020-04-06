@@ -10,8 +10,13 @@ app_name = 'weather_urls'
 
 urlpatterns = [
     path(
-        'weather',
+        'v1/weather',
         views.WeatherAPI.as_view(),
         name='weather_url',
+    ),
+    path(
+        'v2/weather',
+        views.WeatherLogAPI.as_view(),
+        name='weather_url_v2',
     ),
 ]

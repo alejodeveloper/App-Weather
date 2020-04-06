@@ -5,6 +5,8 @@ Weather API methods to retrieve weather information data from some parameters
 Read the docs
 https://openweathermap.org/current
 """
+import json
+
 import requests
 
 from django.conf import settings
