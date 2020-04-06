@@ -55,7 +55,8 @@ class OpenWeather:
             response_data = self.transform_response_data(open_weather_response)
             return response_data
         except APIRequestException as e:
-            return dict(error_message=e.message, exception=e)
+            import traceback
+            return dict(error_message=traceback.format_exc(), exception=e)
 
     def transform_response_data(self, response_data: dict) -> dict:
         """
