@@ -134,7 +134,7 @@ OPEN_WEATHER_API_ID_KEY = 'dummy_key'
 ################################################################################
 ############################# CELERY SETTINGS  #################################
 ################################################################################
-if os.environ.get('CELERY_KRAVEN', False):
+if os.environ.get('CELERY', False):
     remove_apps = [
         'django.contrib.sessions',
         'django.contrib.staticfiles',
@@ -143,9 +143,15 @@ if os.environ.get('CELERY_KRAVEN', False):
     for aplication in remove_apps:
         INSTALLED_APPS.remove(aplication)
 
-BROKER_URL = os.environ.get(
-    'CELERY_BROKER_URL_KRAVEN', 'redis://platzi-kraven-redis:6379/0'
-)
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis-weather')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+
+RABBIT_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'admin')
+RABBIT_PSSWD = os.environ.get('RABBITMQ_DEFAULT_PASS', 'mypass')
+RABBIT_HOST = os.environ.get('RABBITMQ_DEFAULT_HOST', 'rabbit-weather')
+RABBIT_PORT = os.environ.get('RABBITMQ_DEFAULT_PORT', '5672')
+
+CELERY_BROKER_URL = f'amqp://{RABBIT_USER}:{RABBIT_PSSWD}@{RABBIT_HOST}:{RABBIT_PORT}'
 CELERY_RESULT_BACKEND = None
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -157,5 +163,4 @@ CELERY_TIMEZONE = 'America/Bogota'
 ############################## VARIOUS SETTINGS ################################
 ################################################################################
 TIME_BETWEEN_SECS = os.environ.get('TIME_BETWEEN_SECS', 300)
-
-
+TIME_ELAPSE_FOR_TASK = os.environ.get('TIME_BETWEEN_SECS', 3600)
