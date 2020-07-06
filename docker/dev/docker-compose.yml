@@ -59,6 +59,19 @@ services:
     networks:
       - weather-app-nt
 
+  # Swagger
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: weather-app-open-api
+    ports:
+      - "8001:8080"
+    volumes:
+    - "../../swagger_spec:/swagger_spec"
+    environment:
+      SWAGGER_JSON: "/swagger_spec/weather-api-swagger.yaml"
+    networks:
+      - weather-app-nt
+
 networks:
   weather-app-nt:
     external: true
